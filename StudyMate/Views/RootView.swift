@@ -16,6 +16,8 @@ struct RootView: View {
                 LoginView(auth: auth)
             }
         }
-        .task { auth.start() }
+        .task {
+            auth.start()
+            NotificationService.shared.requestAuthorization()}
     }
 }

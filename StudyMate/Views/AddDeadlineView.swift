@@ -55,6 +55,10 @@ struct AddDeadlineView: View {
         d.dueDate = dueDate
         d.type = type
         try? context.save()
+        if let id = d.id {
+            NotificationService.shared.cancel(id: "deadline-\(id.uuidString)")
+            NotificationService.shared.scheduleDeadlineReminder(id: id, title: title, dueDate: dueDate)
+        }
         dismiss()
     }
 }
