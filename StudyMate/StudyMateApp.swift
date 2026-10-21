@@ -1,16 +1,15 @@
-
 import SwiftUI
 import FirebaseCore
 
 @main
 struct StudyMateApp: App {
-    init() {
-        FirebaseApp.configure()
-    }
+    @StateObject private var auth = AuthService()
+
+    init() { FirebaseApp.configure() }
 
     var body: some Scene {
         WindowGroup {
-            MainTabView()
+            RootView().environmentObject(auth)
         }
     }
 }
