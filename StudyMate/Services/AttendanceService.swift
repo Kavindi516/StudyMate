@@ -31,4 +31,20 @@ enum AttendanceService {
         try? context.save()
         return .success(token.subject)
     }
+    
+    static func checkIn(classId: String, context: NSManagedObjectContext,
+                        classes: [ClassLocation], method: String) -> CheckInResult {
+        guard let cls = classes.first(where: { $0.id?.uuidString == classId }) else { return .invalid }
+        if let dist = LocationService.shared.distance(to: cls.latitude, longitude: cls.longitude),
+           dist > cls.radius { return .tooFar }
+
+        let record = AttendanceRecord(context: context)
+        record.id = UUID()
+        record.subject = cls.subject
+        record.date = Date()
+        record.method = method
+        record.status = "Present"
+        try? context.save()
+        return .success(cls.subject ?? "")
+    }
 }

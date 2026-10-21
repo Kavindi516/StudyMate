@@ -10,6 +10,7 @@ struct CheckInView: View {
     @State private var message: String?
     @State private var success = false
     @State private var manualCode = ""
+    @StateObject private var nfc = NFCService()
 
     private var cameraAvailable: Bool { AVCaptureDevice.default(for: .video) != nil }
 
@@ -35,6 +36,14 @@ struct CheckInView: View {
                     }
                 }.padding(.horizontal)
 
+                if nfc.isAvailable {
+                    Button {
+                        nfc.scan { classId in handleNFC(classId) }
+                    } label: {
+                        Label("Tap class NFC tag", systemImage: "wave.3.right")
+                    }
+                    .buttonStyle(.bordered)
+                }
                 if let message {
                     Text(message).foregroundStyle(success ? .green : .red).bold()
                 }
@@ -55,6 +64,16 @@ struct CheckInView: View {
         case .expired:        success = false; message = "Code expired — get a fresh one."
         case .tooFar:         success = false; message = "You're not near the class."
         case .invalid:        success = false; message = "Invalid code."
+        }
+    }
+    
+    private func handleNFC(_ classId: String) {
+        switch AttendanceService.checkIn(classId: classId, context: context,
+                                         classes: Array(classes), method: "NFC") {
+        case .success(let s): success = true;  message = "Checked in to \(s) ✓ (NFC)"
+        case .expired:        success = false; message = "Code expired."
+        case .tooFar:         success = false; message = "You're not near the class."
+        case .invalid:        success = false; message = "Tag not recognised."
         }
     }
 }

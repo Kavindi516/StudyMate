@@ -15,9 +15,22 @@
 		DFBF45BF30738C9D00768815 /* StudyMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		DF4474F83088FB8A002A0499 /* Exceptions for "StudyMate" folder in "StudyMate" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = DFBF45BE30738C9D00768815 /* StudyMate */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DFBF45C130738C9D00768815 /* StudyMate */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DF4474F83088FB8A002A0499 /* Exceptions for "StudyMate" folder in "StudyMate" target */,
+			);
 			path = StudyMate;
 			sourceTree = "<group>";
 		};
@@ -265,6 +278,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyMate/Info.plist;
+				INFOPLIST_KEY_NFCReaderUsageDescription = "StudyMate reads the class NFC tag to mark attendance.";
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "StudyMate adds your study sessions to your calendar";
 				INFOPLIST_KEY_NSCameraUsageDescription = "StudyMate uses the camera to scan attendance codes.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "StudyMate uses Face ID to protect your academic data";
@@ -301,6 +316,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyMate/Info.plist;
+				INFOPLIST_KEY_NFCReaderUsageDescription = "StudyMate reads the class NFC tag to mark attendance.";
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "StudyMate adds your study sessions to your calendar";
 				INFOPLIST_KEY_NSCameraUsageDescription = "StudyMate uses the camera to scan attendance codes.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "StudyMate uses Face ID to protect your academic data";
