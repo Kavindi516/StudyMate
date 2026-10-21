@@ -11,6 +11,8 @@ struct AttendanceView: View {
     ) private var classes: FetchedResults<ClassLocation>
 
     @State private var showingAdd = false
+    @State private var showingCheckIn = false
+    @State private var selectedClass: ClassLocation?
 
     var body: some View {
         NavigationStack {
@@ -30,9 +32,29 @@ struct AttendanceView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { showingAdd = true } label: { Image(systemName: "plus") }
                 }
+                ToolbarItem(placement: .topBarLeading) {
+                    Menu {
+                        Button { showingCheckIn = true } label: {
+                            Label("Check in (scan)", systemImage: "qrcode.viewfinder")
+                        }
+                        if !classes.isEmpty {
+                            Menu("Show code (leader)") {
+                                ForEach(classes) { c in
+                                    Button(c.subject ?? "Class") { selectedClass = c }
+                                }
+                            }
+                        }
+                    } label: { Image(systemName: "qrcode") }
+                }
             }
             .sheet(isPresented: $showingAdd) {
                 AddClassLocationView().environment(\.managedObjectContext, context)
+            }
+            .sheet(isPresented: $showingCheckIn) {
+                CheckInView().environment(\.managedObjectContext, context)
+            }
+            .sheet(item: $selectedClass) { c in
+                ShowAttendanceCodeView(classLocation: c)
             }
             .safeAreaInset(edge: .bottom) {
                 if let inside = classes.first(where: {
