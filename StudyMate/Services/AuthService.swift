@@ -5,6 +5,7 @@ import Combine
 @MainActor
 final class AuthService: ObservableObject {
     @Published var user: User?
+    var uid: String? { user?.uid }
     private var handle: AuthStateDidChangeListenerHandle?
 
     // Called AFTER FirebaseApp.configure() has run (from RootView.task)

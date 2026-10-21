@@ -28,9 +28,6 @@ struct MainTabView: View {
 struct AttendanceView: View {
     var body: some View { NavigationStack { Text("Attendance").navigationTitle("Attendance") } }
 }
-struct GroupsView: View {
-    var body: some View { NavigationStack { Text("Groups").navigationTitle("Groups") } }
-}
 struct SettingsView: View {
     var body: some View { NavigationStack { Text("Settings").navigationTitle("Settings") } }
 }
