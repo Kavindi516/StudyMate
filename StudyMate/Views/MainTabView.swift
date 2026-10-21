@@ -25,12 +25,6 @@ struct MainTabView: View {
 }
 
 // Placeholder screens — we fill these in later phases
-struct HomeView: View {
-    var body: some View { NavigationStack { Text("Home").navigationTitle("Today") } }
-}
-struct ScheduleView: View {
-    var body: some View { NavigationStack { Text("Schedule").navigationTitle("Schedule") } }
-}
 struct AttendanceView: View {
     var body: some View { NavigationStack { Text("Attendance").navigationTitle("Attendance") } }
 }
