@@ -55,9 +55,20 @@ struct AddSessionView: View {
         session.notes = notes
         session.isCompleted = false
         try? context.save()
+
         if let id = session.id {
             NotificationService.shared.scheduleSessionReminder(id: id, subject: subject, date: date)
         }
+
+        // Add to the system Calendar (EventKit)
+        Task {
+            if await CalendarService.shared.requestAccess() {
+                session.eventId = CalendarService.shared.addEvent(
+                    title: subject, startDate: date, durationMinutes: duration, notes: notes)
+                try? context.save()
+            }
+        }
+
         dismiss()
     }
 }

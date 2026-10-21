@@ -42,7 +42,12 @@ struct HomeView: View {
     }
 
     private func delete(_ offsets: IndexSet) {
-        offsets.map { todaySessions[$0] }.forEach(context.delete)
+        for session in offsets.map({ todaySessions[$0] }) {
+            if let eventId = session.eventId {
+                CalendarService.shared.removeEvent(identifier: eventId)
+            }
+            context.delete(session)
+        }
         try? context.save()
     }
 }

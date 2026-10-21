@@ -13,6 +13,11 @@ struct ScheduleView: View {
                 ForEach(sessions) { SessionRow(session: $0) }
             }
             .navigationTitle("Schedule")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink { CalendarView() } label: { Image(systemName: "calendar") }
+                }
+            }
             .overlay {
                 if sessions.isEmpty {
                     ContentUnavailableView("No sessions yet",
