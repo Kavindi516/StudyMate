@@ -31,6 +31,11 @@ struct HomeView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { showingAdd = true } label: { Image(systemName: "plus") }
                 }
+                ToolbarItem(placement: .topBarLeading) {
+                    NavigationLink { DeadlinesView() } label: {
+                        Image(systemName: "list.bullet.clipboard")
+                    }
+                }
             }
             .sheet(isPresented: $showingAdd) { AddSessionView() }
         }
