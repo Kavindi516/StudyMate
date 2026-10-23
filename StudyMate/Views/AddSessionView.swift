@@ -55,6 +55,7 @@ struct AddSessionView: View {
         session.notes = notes
         session.isCompleted = false
         try? context.save()
+        WidgetUpdater.refresh(context: context)
 
         if let id = session.id {
             NotificationService.shared.scheduleSessionReminder(id: id, subject: subject, date: date)

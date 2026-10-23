@@ -53,7 +53,9 @@ struct HomeView: View {
             context.delete(session)
         }
         try? context.save()
+        WidgetUpdater.refresh(context: context)
     }
+
 }
 
 struct SessionRow: View {

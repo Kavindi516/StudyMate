@@ -9,10 +9,41 @@
 /* Begin PBXBuildFile section */
 		DF8F551C307E4736002A2D8B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DF8F551B307E4736002A2D8B /* FirebaseAuth */; };
 		DF8F551E307E4736002A2D8B /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DF8F551D307E4736002A2D8B /* FirebaseFirestore */; };
+		DFD6AD34308B796F009E409C /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD6AD33308B796F009E409C /* WidgetKit.framework */; };
+		DFD6AD36308B796F009E409C /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFD6AD35308B796F009E409C /* SwiftUI.framework */; };
+		DFD6AD43308B7971009E409C /* StudyMateWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DFD6AD31308B796F009E409C /* StudyMateWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DFD6AD41308B7971009E409C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DFBF45B730738C9D00768815 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DFD6AD30308B796F009E409C;
+			remoteInfo = StudyMateWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DFD6AD48308B7971009E409C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				DFD6AD43308B7971009E409C /* StudyMateWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DFBF45BF30738C9D00768815 /* StudyMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFD6AD31308B796F009E409C /* StudyMateWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StudyMateWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFD6AD33308B796F009E409C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		DFD6AD35308B796F009E409C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		DFD6AD4A308B8569009E409C /* StudyMateWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StudyMateWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -23,6 +54,20 @@
 			);
 			target = DFBF45BE30738C9D00768815 /* StudyMate */;
 		};
+		DFD6AD47308B7971009E409C /* Exceptions for "StudyMateWidget" folder in "StudyMateWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = DFD6AD30308B796F009E409C /* StudyMateWidgetExtension */;
+		};
+		DFD6AD50308B886E009E409C /* Exceptions for "StudyMate" folder in "StudyMateWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Services/SharedStore.swift,
+			);
+			target = DFD6AD30308B796F009E409C /* StudyMateWidgetExtension */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -30,8 +75,17 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				DF4474F83088FB8A002A0499 /* Exceptions for "StudyMate" folder in "StudyMate" target */,
+				DFD6AD50308B886E009E409C /* Exceptions for "StudyMate" folder in "StudyMateWidgetExtension" target */,
 			);
 			path = StudyMate;
+			sourceTree = "<group>";
+		};
+		DFD6AD37308B796F009E409C /* StudyMateWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DFD6AD47308B7971009E409C /* Exceptions for "StudyMateWidget" folder in "StudyMateWidgetExtension" target */,
+			);
+			path = StudyMateWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -46,13 +100,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DFD6AD2E308B796F009E409C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFD6AD36308B796F009E409C /* SwiftUI.framework in Frameworks */,
+				DFD6AD34308B796F009E409C /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		DFBF45B630738C9D00768815 = {
 			isa = PBXGroup;
 			children = (
+				DFD6AD4A308B8569009E409C /* StudyMateWidgetExtension.entitlements */,
 				DFBF45C130738C9D00768815 /* StudyMate */,
+				DFD6AD37308B796F009E409C /* StudyMateWidget */,
+				DFD6AD32308B796F009E409C /* Frameworks */,
 				DFBF45C030738C9D00768815 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,8 +127,18 @@
 			isa = PBXGroup;
 			children = (
 				DFBF45BF30738C9D00768815 /* StudyMate.app */,
+				DFD6AD31308B796F009E409C /* StudyMateWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		DFD6AD32308B796F009E409C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DFD6AD33308B796F009E409C /* WidgetKit.framework */,
+				DFD6AD35308B796F009E409C /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -75,10 +151,12 @@
 				DFBF45BB30738C9D00768815 /* Sources */,
 				DFBF45BC30738C9D00768815 /* Frameworks */,
 				DFBF45BD30738C9D00768815 /* Resources */,
+				DFD6AD48308B7971009E409C /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				DFD6AD42308B7971009E409C /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				DFBF45C130738C9D00768815 /* StudyMate */,
@@ -92,6 +170,28 @@
 			productReference = DFBF45BF30738C9D00768815 /* StudyMate.app */;
 			productType = "com.apple.product-type.application";
 		};
+		DFD6AD30308B796F009E409C /* StudyMateWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFD6AD44308B7971009E409C /* Build configuration list for PBXNativeTarget "StudyMateWidgetExtension" */;
+			buildPhases = (
+				DFD6AD2D308B796F009E409C /* Sources */,
+				DFD6AD2E308B796F009E409C /* Frameworks */,
+				DFD6AD2F308B796F009E409C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				DFD6AD37308B796F009E409C /* StudyMateWidget */,
+			);
+			name = StudyMateWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = StudyMateWidgetExtension;
+			productReference = DFD6AD31308B796F009E409C /* StudyMateWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -103,6 +203,9 @@
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					DFBF45BE30738C9D00768815 = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					DFD6AD30308B796F009E409C = {
 						CreatedOnToolsVersion = 26.2;
 					};
 				};
@@ -125,12 +228,20 @@
 			projectRoot = "";
 			targets = (
 				DFBF45BE30738C9D00768815 /* StudyMate */,
+				DFD6AD30308B796F009E409C /* StudyMateWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		DFBF45BD30738C9D00768815 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFD6AD2F308B796F009E409C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -147,7 +258,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DFD6AD2D308B796F009E409C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DFD6AD42308B7971009E409C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DFD6AD30308B796F009E409C /* StudyMateWidgetExtension */;
+			targetProxy = DFD6AD41308B7971009E409C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		DFBF45C830738C9F00768815 /* Debug */ = {
@@ -274,8 +400,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StudyMate/StudyMate.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StudyMate/Info.plist;
@@ -312,8 +440,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = StudyMate/StudyMate.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StudyMate/Info.plist;
@@ -345,6 +475,68 @@
 			};
 			name = Release;
 		};
+		DFD6AD45308B7971009E409C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = StudyMateWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyMateWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StudyMateWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = TestDrive.StudyMate.StudyMateWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DFD6AD46308B7971009E409C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = StudyMateWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyMateWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = StudyMateWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = TestDrive.StudyMate.StudyMateWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -362,6 +554,15 @@
 			buildConfigurations = (
 				DFBF45CB30738C9F00768815 /* Debug */,
 				DFBF45CC30738C9F00768815 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFD6AD44308B7971009E409C /* Build configuration list for PBXNativeTarget "StudyMateWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFD6AD45308B7971009E409C /* Debug */,
+				DFD6AD46308B7971009E409C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,4 +1,5 @@
 import SwiftUI
+import CoreData
 
 struct RootView: View {
     @AppStorage("biometricLock") private var biometricLock = true
@@ -19,6 +20,8 @@ struct RootView: View {
         }
         .task {
             auth.start()
+            WidgetUpdater.refresh(context: PersistenceController.shared.container.viewContext)
             NotificationService.shared.requestAuthorization()}
     }
+    
 }
