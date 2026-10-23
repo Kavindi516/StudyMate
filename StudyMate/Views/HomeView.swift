@@ -17,6 +17,7 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             List {
+                SmartSuggestionCard()
                 if todaySessions.isEmpty {
                     ContentUnavailableView("No sessions today",
                         systemImage: "calendar",
