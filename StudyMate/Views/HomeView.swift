@@ -37,6 +37,9 @@ struct HomeView: View {
                         Image(systemName: "list.bullet.clipboard")
                     }
                 }
+                ToolbarItem(placement: .topBarLeading) {
+                    NavigationLink { StatsView() } label: { Image(systemName: "chart.bar") }
+                }
             }
             .sheet(isPresented: $showingAdd) { AddSessionView() }
         }

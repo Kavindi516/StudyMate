@@ -1,14 +1,15 @@
 import SwiftUI
 
 struct RootView: View {
+    @AppStorage("biometricLock") private var biometricLock = true
     @EnvironmentObject var auth: AuthService
     @State private var isUnlocked = false
 
     var body: some View {
         Group {
             if auth.isSignedIn {
-                if isUnlocked {
-                    MainTabView()          // ← your Phase 1 tab bar (see note)
+                if isUnlocked || !biometricLock {
+                    MainTabView()
                 } else {
                     LockView(isUnlocked: $isUnlocked)
                 }
