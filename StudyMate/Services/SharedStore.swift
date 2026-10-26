@@ -1,7 +1,7 @@
 import Foundation
 
 enum SharedStore {
-    static let appGroup = "group.com.kavindi.StudyMate" // must match the App Group on BOTH targets
+    static let appGroup = "group.TestDrive.StudyMate." // must match the App Group on BOTH targets
 
     private static var defaults: UserDefaults? { UserDefaults(suiteName: appGroup) }
 
