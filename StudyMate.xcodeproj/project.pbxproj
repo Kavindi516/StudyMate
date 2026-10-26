@@ -15,6 +15,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		DFBD7057308F5C0A000A67D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DFBF45B730738C9D00768815 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DFBF45BE30738C9D00768815;
+			remoteInfo = StudyMate;
+		};
 		DFD6AD41308B7971009E409C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DFBF45B730738C9D00768815 /* Project object */;
@@ -39,6 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DFBD7053308F5C0A000A67D7 /* StudyMateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudyMateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFBF45BF30738C9D00768815 /* StudyMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFD6AD31308B796F009E409C /* StudyMateWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StudyMateWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFD6AD33308B796F009E409C /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -71,6 +79,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		DFBD7054308F5C0A000A67D7 /* StudyMateTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = StudyMateTests;
+			sourceTree = "<group>";
+		};
 		DFBF45C130738C9D00768815 /* StudyMate */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -91,6 +104,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		DFBD7050308F5C0A000A67D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DFBF45BC30738C9D00768815 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -118,6 +138,7 @@
 				DFD6AD4A308B8569009E409C /* StudyMateWidgetExtension.entitlements */,
 				DFBF45C130738C9D00768815 /* StudyMate */,
 				DFD6AD37308B796F009E409C /* StudyMateWidget */,
+				DFBD7054308F5C0A000A67D7 /* StudyMateTests */,
 				DFD6AD32308B796F009E409C /* Frameworks */,
 				DFBF45C030738C9D00768815 /* Products */,
 			);
@@ -128,6 +149,7 @@
 			children = (
 				DFBF45BF30738C9D00768815 /* StudyMate.app */,
 				DFD6AD31308B796F009E409C /* StudyMateWidgetExtension.appex */,
+				DFBD7053308F5C0A000A67D7 /* StudyMateTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -144,6 +166,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		DFBD7052308F5C0A000A67D7 /* StudyMateTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFBD7059308F5C0A000A67D7 /* Build configuration list for PBXNativeTarget "StudyMateTests" */;
+			buildPhases = (
+				DFBD704F308F5C0A000A67D7 /* Sources */,
+				DFBD7050308F5C0A000A67D7 /* Frameworks */,
+				DFBD7051308F5C0A000A67D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DFBD7058308F5C0A000A67D7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				DFBD7054308F5C0A000A67D7 /* StudyMateTests */,
+			);
+			name = StudyMateTests;
+			packageProductDependencies = (
+			);
+			productName = StudyMateTests;
+			productReference = DFBD7053308F5C0A000A67D7 /* StudyMateTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		DFBF45BE30738C9D00768815 /* StudyMate */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DFBF45CA30738C9F00768815 /* Build configuration list for PBXNativeTarget "StudyMate" */;
@@ -202,6 +247,10 @@
 				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
+					DFBD7052308F5C0A000A67D7 = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = DFBF45BE30738C9D00768815;
+					};
 					DFBF45BE30738C9D00768815 = {
 						CreatedOnToolsVersion = 26.2;
 					};
@@ -229,11 +278,19 @@
 			targets = (
 				DFBF45BE30738C9D00768815 /* StudyMate */,
 				DFD6AD30308B796F009E409C /* StudyMateWidgetExtension */,
+				DFBD7052308F5C0A000A67D7 /* StudyMateTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		DFBD7051308F5C0A000A67D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DFBF45BD30738C9D00768815 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -251,6 +308,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		DFBD704F308F5C0A000A67D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DFBF45BB30738C9D00768815 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -268,6 +332,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		DFBD7058308F5C0A000A67D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DFBF45BE30738C9D00768815 /* StudyMate */;
+			targetProxy = DFBD7057308F5C0A000A67D7 /* PBXContainerItemProxy */;
+		};
 		DFD6AD42308B7971009E409C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DFD6AD30308B796F009E409C /* StudyMateWidgetExtension */;
@@ -276,6 +345,46 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		DFBD705A308F5C0A000A67D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = TestDrive.StudyMateTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StudyMate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StudyMate";
+			};
+			name = Debug;
+		};
+		DFBD705B308F5C0A000A67D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = TestDrive.StudyMateTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StudyMate.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StudyMate";
+			};
+			name = Release;
+		};
 		DFBF45C830738C9F00768815 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -540,6 +649,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DFBD7059308F5C0A000A67D7 /* Build configuration list for PBXNativeTarget "StudyMateTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFBD705A308F5C0A000A67D7 /* Debug */,
+				DFBD705B308F5C0A000A67D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DFBF45BA30738C9D00768815 /* Build configuration list for PBXProject "StudyMate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -31,6 +31,7 @@ struct AttendanceView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { showingAdd = true } label: { Image(systemName: "plus") }
+                        .accessibilityLabel("Add class")
                 }
                 ToolbarItem(placement: .topBarLeading) {
                     Menu {
@@ -45,6 +46,7 @@ struct AttendanceView: View {
                             }
                         }
                     } label: { Image(systemName: "qrcode") }
+                        .accessibilityLabel("Attendance actions")
                 }
             }
             .sheet(isPresented: $showingAdd) {

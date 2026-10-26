@@ -33,6 +33,7 @@ struct GroupsView: View {
                         Button("Create group") { showingCreate = true }
                         Button("Join with code") { showingJoin = true }
                     } label: { Image(systemName: "plus") }
+                        .accessibilityLabel("New group")
                 }
             }
             .sheet(isPresented: $showingCreate) {

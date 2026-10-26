@@ -31,14 +31,15 @@ struct HomeView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { showingAdd = true } label: { Image(systemName: "plus") }
+                        .accessibilityLabel("Add session")
                 }
                 ToolbarItem(placement: .topBarLeading) {
-                    NavigationLink { DeadlinesView() } label: {
-                        Image(systemName: "list.bullet.clipboard")
-                    }
+                    NavigationLink { DeadlinesView() } label: { Image(systemName: "list.bullet.clipboard") }
+                        .accessibilityLabel("Deadlines")
                 }
                 ToolbarItem(placement: .topBarLeading) {
                     NavigationLink { StatsView() } label: { Image(systemName: "chart.bar") }
+                        .accessibilityLabel("Progress")
                 }
             }
             .sheet(isPresented: $showingAdd) { AddSessionView() }
