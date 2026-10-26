@@ -3,6 +3,7 @@ import CoreData
 import FirebaseAuth
 
 struct SettingsView: View {
+    @AppStorage("appTheme") private var appTheme = "system"
     @EnvironmentObject var auth: AuthService
     @Environment(\.managedObjectContext) private var context
     @AppStorage("notificationsEnabled") private var notificationsEnabled = true
@@ -28,6 +29,14 @@ struct SettingsView: View {
                 Section("Security") {
                     Toggle("Face ID lock", isOn: $biometricLock)
                 }
+                Section("Appearance") {
+                    Picker("Theme", selection: $appTheme) {
+                        Text("System").tag("system")
+                        Text("Light").tag("light")
+                        Text("Dark").tag("dark")
+                    }
+                    .pickerStyle(.segmented)
+                }
                 Section("Data") {
                     Button("Reset all study data", role: .destructive) { showResetAlert = true }
                 }
@@ -48,6 +57,7 @@ struct SettingsView: View {
         }
     }
 
+    
     private func resetData() {
         for name in ["StudySession", "Deadline", "ClassLocation", "AttendanceRecord"] {
             let req = NSFetchRequest<NSFetchRequestResult>(entityName: name)

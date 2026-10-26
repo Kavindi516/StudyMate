@@ -24,15 +24,23 @@ struct SmartSuggestionCard: View {
 
     var body: some View {
         if let s = suggestion {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
                 Label("Suggested for you", systemImage: "sparkles")
-                    .font(.caption).foregroundStyle(.secondary)
+                    .font(.caption).foregroundStyle(.white.opacity(0.9))
                 Text("Study \(s.subject) around \(s.hour):00")
-                    .font(.headline)
+                    .font(.headline).foregroundStyle(.white)
                 Text("You complete about \(Int(s.probability * 100))% of sessions like this")
-                    .font(.caption).foregroundStyle(.secondary)
+                    .font(.caption).foregroundStyle(.white.opacity(0.9))
             }
-            .padding(.vertical, 4)
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                LinearGradient(colors: [.indigo, .blue],
+                               startPoint: .topLeading, endPoint: .bottomTrailing)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+            .listRowBackground(Color.clear)
         }
     }
 }

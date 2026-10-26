@@ -3,6 +3,7 @@ import CoreData
 
 struct RootView: View {
     @AppStorage("biometricLock") private var biometricLock = true
+    @AppStorage("appTheme") private var appTheme = "system"
     @EnvironmentObject var auth: AuthService
     @State private var isUnlocked = false
 
@@ -22,6 +23,14 @@ struct RootView: View {
             auth.start()
             WidgetUpdater.refresh(context: PersistenceController.shared.container.viewContext)
             NotificationService.shared.requestAuthorization()}
+        .preferredColorScheme(scheme)
     }
-    
+
+    private var scheme: ColorScheme? {
+        switch appTheme {
+        case "light": return .light
+        case "dark":  return .dark
+        default:      return nil
+        }
+    }
 }
