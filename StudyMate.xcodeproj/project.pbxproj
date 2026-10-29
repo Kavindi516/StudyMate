@@ -46,6 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DFA5D6733093844C00E8EC71 /* StudyMate.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = StudyMate.xctestplan; sourceTree = "<group>"; };
 		DFBD7053308F5C0A000A67D7 /* StudyMateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudyMateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFBF45BF30738C9D00768815 /* StudyMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFD6AD31308B796F009E409C /* StudyMateWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StudyMateWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +136,7 @@
 		DFBF45B630738C9D00768815 = {
 			isa = PBXGroup;
 			children = (
+				DFA5D6733093844C00E8EC71 /* StudyMate.xctestplan */,
 				DFD6AD4A308B8569009E409C /* StudyMateWidgetExtension.entitlements */,
 				DFBF45C130738C9D00768815 /* StudyMate */,
 				DFD6AD37308B796F009E409C /* StudyMateWidget */,

@@ -1,6 +1,7 @@
 import Testing
 import Foundation
 @testable import StudyMate
+import CoreLocation
 
 struct StudyMateTests {
 
@@ -93,5 +94,62 @@ struct StudyMateTests {
     @Test func tokenEncodedIsNotEmpty() {
         let token = AttendanceToken(classId: "x", subject: "Y", issuedAt: Date())
         #expect(token.encoded().isEmpty == false)
+    }
+    
+    
+    //Edge & boundary cases
+
+    @Test func totalHoursEmptyListIsZero() {
+        #expect(StudyMateLogic.totalHours(minutes: []) == 0)
+    }
+
+    @Test func attendancePercentNoClassesIsZero() {
+        #expect(StudyMateLogic.attendancePercent(present: 0, total: 0) == 0)
+    }
+
+    @Test func attendancePercentAllPresent() {
+        #expect(StudyMateLogic.attendancePercent(present: 10, total: 10) == 100)
+    }
+
+    @Test func attendancePercentHalfPresent() {
+        #expect(StudyMateLogic.attendancePercent(present: 5, total: 10) == 50)
+    }
+
+    @Test func daysUntilPastDateIsNegative() {
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        #expect(StudyMateLogic.daysUntil(yesterday) < 0)
+    }
+
+    @Test func daysUntilTodayIsZero() {
+        #expect(StudyMateLogic.daysUntil(Date()) == 0)
+    }
+
+    @Test func tokenExpiredIsNotFresh() {
+        let old = Date(timeIntervalSinceNow: -600) // 10 minutes ago
+        #expect(StudyMateLogic.isTokenFresh(issuedAt: old, now: Date()) == false)
+    }
+
+    @Test func tokenJustIssuedIsFresh() {
+        #expect(StudyMateLogic.isTokenFresh(issuedAt: Date(), now: Date()) == true)
+    }
+    
+    // Geofence distance math
+
+    @Test func samePointIsWellInsideRadius() {
+        let cls  = CLLocation(latitude: 6.9271, longitude: 79.8612)
+        let user = CLLocation(latitude: 6.9271, longitude: 79.8612)
+        #expect(cls.distance(from: user) < 50)   // same spot → inside a 50 m geofence
+    }
+
+    @Test func nearbyPointIsInsideRadius() {
+        let cls  = CLLocation(latitude: 6.9271, longitude: 79.8612)
+        let user = CLLocation(latitude: 6.92713, longitude: 79.8612) // a few metres north
+        #expect(cls.distance(from: user) <= 50)  // check-in allowed
+    }
+
+    @Test func farPointIsOutsideRadius() {
+        let cls  = CLLocation(latitude: 6.9271, longitude: 79.8612)
+        let user = CLLocation(latitude: 6.9361, longitude: 79.8612) // ~1 km north
+        #expect(cls.distance(from: user) > 50)   // would return .tooFar
     }
 }
