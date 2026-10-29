@@ -8,24 +8,21 @@ struct GroupsView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                if service.groups.isEmpty {
-                    ContentUnavailableView("No groups yet", systemImage: "person.2",
-                        description: Text("Create or join a study group."))
-                } else {
-                    ForEach(service.groups) { group in
-                        NavigationLink {
-                            GroupDetailView(group: group)
-                        } label: {
-                            VStack(alignment: .leading) {
-                                Text(group.name).font(.headline)
-                                Text("\(group.memberIds.count) members · \(group.module)")
-                                    .font(.caption).foregroundStyle(.secondary)
-                            }
+            ScrollView {
+                VStack(spacing: 12) {
+                    if service.groups.isEmpty {
+                        emptyCard
+                    } else {
+                        ForEach(service.groups) { group in
+                            NavigationLink { GroupDetailView(group: group) } label: { groupCard(group) }
+                                .buttonStyle(.plain)
                         }
                     }
+                    Spacer(minLength: 10)
                 }
+                .padding()
             }
+            .background(Color(.systemGroupedBackground))
             .navigationTitle("Groups")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -33,16 +30,40 @@ struct GroupsView: View {
                         Button("Create group") { showingCreate = true }
                         Button("Join with code") { showingJoin = true }
                     } label: { Image(systemName: "plus") }
-                        .accessibilityLabel("New group")
+                    .accessibilityLabel("New group")
                 }
             }
-            .sheet(isPresented: $showingCreate) {
-                CreateGroupView(service: service).environmentObject(auth)
-            }
-            .sheet(isPresented: $showingJoin) {
-                JoinGroupView(service: service).environmentObject(auth)
-            }
+            .sheet(isPresented: $showingCreate) { CreateGroupView(service: service).environmentObject(auth) }
+            .sheet(isPresented: $showingJoin) { JoinGroupView(service: service).environmentObject(auth) }
             .task { if let uid = auth.uid { service.listenGroups(uid: uid) } }
         }
+    }
+
+    private func groupCard(_ group: StudyGroup) -> some View {
+        HStack(spacing: 14) {
+            Image(systemName: "person.3.fill")
+                .font(.title3).foregroundStyle(.indigo)
+                .frame(width: 44, height: 44)
+                .background(.indigo.opacity(0.12), in: RoundedRectangle(cornerRadius: 11))
+            VStack(alignment: .leading, spacing: 3) {
+                Text(group.name).font(.body.weight(.semibold))
+                Text("\(group.memberIds.count) members · \(group.module)")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+            Spacer()
+            Image(systemName: "chevron.right").font(.caption).foregroundStyle(.tertiary)
+        }
+        .padding(14)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
+    }
+
+    private var emptyCard: some View {
+        VStack(spacing: 8) {
+            Image(systemName: "person.2").font(.largeTitle).foregroundStyle(.secondary)
+            Text("No groups yet").font(.headline)
+            Text("Create or join a study group.").font(.caption).foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity).padding(.vertical, 50)
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
     }
 }

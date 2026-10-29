@@ -4,12 +4,15 @@ import CoreData
 struct RootView: View {
     @AppStorage("biometricLock") private var biometricLock = true
     @AppStorage("appTheme") private var appTheme = "system"
+    @AppStorage("hasOnboarded") private var hasOnboarded = false
     @EnvironmentObject var auth: AuthService
     @State private var isUnlocked = false
 
     var body: some View {
         Group {
-            if auth.isSignedIn {
+            if !hasOnboarded {
+                OnboardingView()
+            } else if auth.isSignedIn {
                 if isUnlocked || !biometricLock {
                     MainTabView()
                 } else {
@@ -22,7 +25,8 @@ struct RootView: View {
         .task {
             auth.start()
             WidgetUpdater.refresh(context: PersistenceController.shared.container.viewContext)
-            NotificationService.shared.requestAuthorization()}
+            NotificationService.shared.requestAuthorization()
+        }
         .preferredColorScheme(scheme)
     }
 

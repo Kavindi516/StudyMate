@@ -2,37 +2,82 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject private var vm: AuthViewModel
+    @State private var isSignUp = false
     init(auth: AuthService) { _vm = StateObject(wrappedValue: AuthViewModel(auth: auth)) }
 
     var body: some View {
-        VStack(spacing: 20) {
-            Spacer()
-            Image(systemName: "book.closed.fill").font(.system(size: 60)).foregroundStyle(.tint)
-            Text("StudyMate").font(.largeTitle).bold()
-            Text("Plan. Attend. Study together.").foregroundStyle(.secondary)
+        ZStack {
+            LinearGradient(colors: [Color.indigo.opacity(0.18), Color(.systemBackground)],
+                           startPoint: .top, endPoint: .center)
+                .ignoresSafeArea()
+            ScrollView {
+                VStack(spacing: 24) {
+                    VStack(spacing: 12) {
+                        ZStack {
+                            Circle()
+                                .fill(LinearGradient(colors: [.indigo, .blue],
+                                      startPoint: .topLeading, endPoint: .bottomTrailing))
+                                .frame(width: 84, height: 84)
+                            Image(systemName: "book.closed.fill")
+                                .font(.system(size: 34)).foregroundStyle(.white)
+                        }
+                        Text("StudyMate").font(.largeTitle.bold())
+                        Text(isSignUp ? "Create your account" : "Welcome back")
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.top, 60)
 
-            VStack(spacing: 12) {
-                TextField("Email", text: $vm.email)
-                    .textInputAutocapitalization(.never)
-                    .keyboardType(.emailAddress)
-                    .textFieldStyle(.roundedBorder)
-                SecureField("Password", text: $vm.password)
-                    .textFieldStyle(.roundedBorder)
-            }.padding(.horizontal)
+                    VStack(spacing: 16) {
+                        Picker("", selection: $isSignUp) {
+                            Text("Log In").tag(false)
+                            Text("Sign Up").tag(true)
+                        }
+                        .pickerStyle(.segmented)
+                        .onChange(of: isSignUp) { _, _ in vm.errorMessage = nil }
 
-            if let error = vm.errorMessage {
-                Text(error).foregroundStyle(.red).font(.footnote).padding(.horizontal)
+                        VStack(spacing: 12) {
+                            HStack {
+                                Image(systemName: "envelope").foregroundStyle(.secondary).frame(width: 20)
+                                TextField("Email", text: $vm.email)
+                                    .textInputAutocapitalization(.never).keyboardType(.emailAddress)
+                            }
+                            .padding()
+                            .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
+
+                            HStack {
+                                Image(systemName: "lock").foregroundStyle(.secondary).frame(width: 20)
+                                SecureField("Password", text: $vm.password)
+                            }
+                            .padding()
+                            .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
+                        }
+
+                        if let error = vm.errorMessage {
+                            Text(error).foregroundStyle(.red).font(.footnote)
+                        }
+
+                        Button {
+                            Task { isSignUp ? await vm.signUp() : await vm.login() }
+                        } label: {
+                            if vm.isLoading {
+                                ProgressView().frame(maxWidth: .infinity)
+                            } else {
+                                Text(isSignUp ? "Create Account" : "Log In")
+                                    .bold().frame(maxWidth: .infinity)
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
+                        .disabled(vm.isLoading || vm.email.isEmpty || vm.password.isEmpty)
+                    }
+                    .padding()
+                    .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 20))
+                    .shadow(color: .black.opacity(0.06), radius: 10, y: 4)
+                    .padding(.horizontal)
+
+                    Spacer(minLength: 40)
+                }
             }
-
-            Button { Task { await vm.login() } } label: {
-                Text("Log In").frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.borderedProminent).padding(.horizontal).disabled(vm.isLoading)
-
-            Button("Create an account") { Task { await vm.signUp() } }
-                .disabled(vm.isLoading)
-            Spacer()
         }
-        .padding()
     }
 }

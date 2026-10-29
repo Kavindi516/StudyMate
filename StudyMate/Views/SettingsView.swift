@@ -3,48 +3,82 @@ import CoreData
 import FirebaseAuth
 
 struct SettingsView: View {
+    @AppStorage("hasOnboarded") private var hasOnboarded = false
     @AppStorage("appTheme") private var appTheme = "system"
-    @EnvironmentObject var auth: AuthService
-    @Environment(\.managedObjectContext) private var context
     @AppStorage("notificationsEnabled") private var notificationsEnabled = true
     @AppStorage("biometricLock") private var biometricLock = true
+    @EnvironmentObject var auth: AuthService
+    @Environment(\.managedObjectContext) private var context
     @State private var showResetAlert = false
 
     var body: some View {
         NavigationStack {
             Form {
+                // Profile header
                 Section {
-                    HStack(spacing: 12) {
-                        Image(systemName: "person.circle.fill")
-                            .font(.largeTitle).foregroundStyle(.tint)
-                        VStack(alignment: .leading) {
+                    HStack(spacing: 14) {
+                        ZStack {
+                            Circle().fill(LinearGradient(colors: [.indigo, .blue],
+                                startPoint: .topLeading, endPoint: .bottomTrailing))
+                                .frame(width: 56, height: 56)
+                            Text(initial).font(.title2.bold()).foregroundStyle(.white)
+                        }
+                        VStack(alignment: .leading, spacing: 2) {
                             Text(auth.user?.email ?? "Signed in").font(.headline)
                             Text("StudyMate account").font(.caption).foregroundStyle(.secondary)
                         }
                     }
+                    .padding(.vertical, 6)
                 }
-                Section("Notifications") {
-                    Toggle("Session reminders", isOn: $notificationsEnabled)
-                }
-                Section("Security") {
-                    Toggle("Face ID lock", isOn: $biometricLock)
-                }
-                Section("Appearance") {
-                    Picker("Theme", selection: $appTheme) {
-                        Text("System").tag("system")
-                        Text("Light").tag("light")
-                        Text("Dark").tag("dark")
+
+                Section("Preferences") {
+                    HStack {
+                        iconBox("bell.fill", .orange)
+                        Toggle("Session reminders", isOn: $notificationsEnabled)
                     }
-                    .pickerStyle(.segmented)
+                    HStack {
+                        iconBox("faceid", .blue)
+                        Toggle("Face ID lock", isOn: $biometricLock)
+                    }
                 }
-                Section("Data") {
-                    Button("Reset all study data", role: .destructive) { showResetAlert = true }
+
+                Section("Appearance") {
+                    HStack {
+                        iconBox("paintbrush.fill", .purple)
+                        Picker("Theme", selection: $appTheme) {
+                            Text("System").tag("system")
+                            Text("Light").tag("light")
+                            Text("Dark").tag("dark")
+                        }
+                    }
                 }
+
                 Section {
-                    Button("Sign out", role: .destructive) { try? auth.signOut() }
+                    Button(role: .destructive) { showResetAlert = true } label: {
+                        HStack { iconBox("trash.fill", .red); Text("Reset all study data") }
+                    }
+                    Button(role: .destructive) { try? auth.signOut() } label: {
+                        HStack { iconBox("rectangle.portrait.and.arrow.right", .gray); Text("Sign out") }
+                    }
                 }
+
                 Section {
-                    HStack { Text("Version"); Spacer(); Text("1.0").foregroundStyle(.secondary) }
+                    Button {
+                        hasOnboarded = false
+                    } label: {
+                        HStack {
+                            iconBox("sparkles", .purple)
+                            Text("Replay onboarding")
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.caption).foregroundStyle(.tertiary)
+                        }
+                    }
+                    .foregroundStyle(.primary)
+                    HStack {
+                        iconBox("info.circle.fill", .blue)
+                        Text("Version"); Spacer(); Text("1.0").foregroundStyle(.secondary)
+                    }
                 }
             }
             .navigationTitle("Settings")
@@ -57,7 +91,16 @@ struct SettingsView: View {
         }
     }
 
-    
+    private var initial: String { String((auth.user?.email ?? "S").prefix(1)).uppercased() }
+
+    private func iconBox(_ name: String, _ color: Color) -> some View {
+        Image(systemName: name)
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(.white)
+            .frame(width: 28, height: 28)
+            .background(color, in: RoundedRectangle(cornerRadius: 7))
+    }
+
     private func resetData() {
         for name in ["StudySession", "Deadline", "ClassLocation", "AttendanceRecord"] {
             let req = NSFetchRequest<NSFetchRequestResult>(entityName: name)
