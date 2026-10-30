@@ -110,7 +110,7 @@ struct HomeView: View {
                 .fill(priorityColor(session))
                 .frame(width: 6, height: 44)
             Button {
-                session.isCompleted.toggle(); try? context.save()
+                session.isCompleted.toggle(); try? context.save(); WidgetUpdater.refresh(context: context)
             } label: {
                 Image(systemName: session.isCompleted ? "checkmark.circle.fill" : "circle")
                     .font(.title2)
@@ -159,6 +159,7 @@ struct HomeView: View {
         if let eventId = session.eventId { CalendarService.shared.removeEvent(identifier: eventId) }
         context.delete(session)
         try? context.save()
+        WidgetUpdater.refresh(context: context)
     }
 }
 
@@ -179,7 +180,7 @@ struct SessionRow: View {
         HStack(spacing: 12) {
             RoundedRectangle(cornerRadius: 3).fill(priorityColor).frame(width: 5, height: 40)
             Button {
-                session.isCompleted.toggle(); try? context.save()
+                session.isCompleted.toggle(); try? context.save(); WidgetUpdater.refresh(context: context)
             } label: {
                 Image(systemName: session.isCompleted ? "checkmark.circle.fill" : "circle")
                     .font(.title3).foregroundStyle(session.isCompleted ? .green : .secondary)

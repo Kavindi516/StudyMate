@@ -26,6 +26,7 @@ struct AddStudySessionIntent: AppIntent {
         session.priority = "Medium"
         session.isCompleted = false
         try? context.save()
+        WidgetUpdater.refresh(context: context)
         return .result(dialog: "Added a \(duration)-minute \(subject) session.")
     }
 }

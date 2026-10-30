@@ -37,6 +37,7 @@ struct ScheduleView: View {
             RoundedRectangle(cornerRadius: 4).fill(priorityColor(session)).frame(width: 6, height: 44)
             Button {
                 session.isCompleted.toggle(); try? context.save()
+                WidgetUpdater.refresh(context: context)
             } label: {
                 Image(systemName: session.isCompleted ? "checkmark.circle.fill" : "circle")
                     .font(.title2).foregroundStyle(session.isCompleted ? .green : .secondary)
@@ -54,6 +55,7 @@ struct ScheduleView: View {
             Button(role: .destructive) {
                 if let eventId = session.eventId { CalendarService.shared.removeEvent(identifier: eventId) }
                 context.delete(session); try? context.save()
+                WidgetUpdater.refresh(context: context)
             } label: { Label("Delete", systemImage: "trash") }
         }
     }

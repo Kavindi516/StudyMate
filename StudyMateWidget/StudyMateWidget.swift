@@ -15,11 +15,17 @@ struct Provider: TimelineProvider {
         completion(load())
     }
     func getTimeline(in context: Context, completion: @escaping (Timeline<SessionEntry>) -> Void) {
-        completion(Timeline(entries: [load()], policy: .after(Date().addingTimeInterval(1800))))
+        let entry = load()
+        // Refresh when the session starts so a past session isn't shown as "next".
+        var refresh = Date().addingTimeInterval(1800)
+        if let start = entry.sessionDate, start < refresh { refresh = start }
+        completion(Timeline(entries: [entry], policy: .after(refresh)))
     }
     private func load() -> SessionEntry {
-        let s = SharedStore.loadNextSession()
-        return SessionEntry(date: Date(), subject: s?.subject, sessionDate: s?.date)
+        guard let s = SharedStore.loadNextSession(), s.date >= Date() else {
+            return SessionEntry(date: Date(), subject: nil, sessionDate: nil)
+        }
+        return SessionEntry(date: Date(), subject: s.subject, sessionDate: s.date)
     }
 }
 
