@@ -46,6 +46,7 @@ struct SessionCard: View {
                 Label("Delete", systemImage: "trash")
             }
         }
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("session.card")
     }
 

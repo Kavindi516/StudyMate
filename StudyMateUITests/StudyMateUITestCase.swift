@@ -40,6 +40,22 @@ class StudyMateUITestCase: XCTestCase {
         let button = tab(name)
         XCTAssertTrue(button.waitForExistence(timeout: 10), "Tab \(name) not found", file: file, line: line)
         button.tap()
+        // A tap during a transition can be swallowed – retry once if the tab didn't become selected.
+        let selected = XCTNSPredicateExpectation(predicate: NSPredicate(format: "isSelected == true"), object: button)
+        if XCTWaiter().wait(for: [selected], timeout: 3) != .completed { button.tap() }
+    }
+
+    /// Taps the actual switch (right edge of the row) – tapping the middle only hits the label.
+    func flip(_ toggle: XCUIElement, file: StaticString = #filePath, line: UInt = #line) {
+        assertExists(toggle, file: file, line: line)
+        toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5)).tap()
+    }
+
+    func assertValue(_ toggle: XCUIElement, _ expected: String, timeout: TimeInterval = 5,
+                     file: StaticString = #filePath, line: UInt = #line) {
+        let match = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", expected), object: toggle)
+        XCTAssertEqual(XCTWaiter().wait(for: [match], timeout: timeout), .completed,
+                       "Expected value \(expected), got \(String(describing: toggle.value))", file: file, line: line)
     }
 
     /// Any element type, found by accessibility identifier.

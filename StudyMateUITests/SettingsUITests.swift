@@ -32,19 +32,22 @@ final class SettingsUITests: StudyMateUITestCase {
     func testSessionRemindersToggleCanBeSwitchedOffAndOn() {
         let toggle = app.switches["Session reminders"]
         assertExists(toggle)
-        XCTAssertEqual(toggle.value as? String, "1")
-        toggle.tap()
-        XCTAssertEqual(toggle.value as? String, "0")
-        toggle.tap()
-        XCTAssertEqual(toggle.value as? String, "1")
+        assertValue(toggle, "1")
+        flip(toggle)
+        assertValue(toggle, "0")
+        flip(toggle)
+        assertValue(toggle, "1")
     }
 
-    func testFaceIDLockToggleCanBeSwitched() {
+    func testTurningFaceIDLockOnLocksTheAppImmediately() {
         let toggle = app.switches["Face ID lock"]
         assertExists(toggle)
-        XCTAssertEqual(toggle.value as? String, "0") // UI tests start with the lock off
-        toggle.tap()
-        XCTAssertEqual(toggle.value as? String, "1")
+        assertValue(toggle, "0") // UI tests start with the lock off
+        flip(toggle)
+
+        assertExists(text("StudyMate is locked"), timeout: 15)
+        assertExists(app.buttons["Unlock with Face ID"])
+        XCTAssertFalse(app.tabBars.firstMatch.exists, "Tabs must be hidden behind the lock screen")
     }
 
     // MARK: Reset

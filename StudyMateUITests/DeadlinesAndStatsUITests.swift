@@ -42,7 +42,8 @@ final class DeadlinesUITests: StudyMateUITestCase {
         addDeadline(title: "Essay 1", module: "ENG101")
         assertExists(text("Essay 1"))
         XCTAssertTrue(element(containing: "ENG101").exists)
-        XCTAssertEqual(element("deadline.countdown").label, "Today")
+        // The row is a button, so its pieces are read as one label: "Essay 1, ENG101 · <date>, Today".
+        XCTAssertTrue(element(containing: "Today").exists, "Countdown should say Today")
         XCTAssertFalse(text("No courseworks").exists)
     }
 
