@@ -38,7 +38,17 @@ struct SmartSuggestionCard: View {
                 LinearGradient(colors: [.indigo, .blue],
                                startPoint: .topLeading, endPoint: .bottomTrailing)
             )
-            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .overlay(alignment: .topTrailing) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 44, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.18))
+                    .padding(12)
+                    .accessibilityHidden(true)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .shadow(color: .indigo.opacity(0.3), radius: 10, y: 5)
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("suggestion.card")
             .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             .listRowBackground(Color.clear)
         }

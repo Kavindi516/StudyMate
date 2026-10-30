@@ -24,6 +24,7 @@ struct DeadlinesView: View {
             }
             .pickerStyle(.segmented)
             .padding(.horizontal)
+            .accessibilityIdentifier("deadlines.type")
 
             List {
                 if filtered.isEmpty {
@@ -40,7 +41,10 @@ struct DeadlinesView: View {
                     .onDelete(perform: delete)
                 }
             }
+            .listStyle(.insetGrouped)
+            .scrollContentBackground(.hidden)
         }
+        .background(Color(.systemGroupedBackground))
         .navigationTitle("Deadlines")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -63,33 +67,38 @@ struct DeadlineRow: View {
 
     private var daysLeft: Int {
         guard let due = deadline.dueDate else { return 0 }
-        let cal = Calendar.current
-        return cal.dateComponents([.day],
-            from: cal.startOfDay(for: Date()),
-            to: cal.startOfDay(for: due)).day ?? 0
+        return StudyMateLogic.daysUntil(due)
     }
-    private var countdownText: String {
-        if daysLeft < 0 { return "Overdue" }
-        if daysLeft == 0 { return "Today" }
-        return daysLeft == 1 ? "1 day" : "\(daysLeft) days"
-    }
-    private var countdownColor: Color {
-        if daysLeft < 0 { return .red }
-        return daysLeft <= 2 ? .orange : .green
-    }
+    private var color: Color { Theme.countdownColor(StudyMateLogic.countdownLevel(daysLeft: daysLeft)) }
+    private var isExam: Bool { deadline.type == "Exam" }
 
     var body: some View {
-        HStack {
+        HStack(spacing: 12) {
+            Image(systemName: isExam ? "graduationcap.fill" : "doc.text.fill")
+                .font(.subheadline)
+                .foregroundStyle(isExam ? .pink : .indigo)
+                .frame(width: 36, height: 36)
+                .background((isExam ? Color.pink : Color.indigo).opacity(0.14),
+                            in: RoundedRectangle(cornerRadius: 10, style: .continuous))
             VStack(alignment: .leading, spacing: 2) {
-                Text(deadline.title ?? "Untitled")
-                Text(deadline.module ?? "").font(.caption).foregroundStyle(.secondary)
+                Text(deadline.title ?? "Untitled").font(.body.weight(.medium))
+                Text(subtitle).font(.caption).foregroundStyle(.secondary)
             }
             Spacer()
-            Text(countdownText)
+            Text(StudyMateLogic.countdownText(daysLeft: daysLeft))
                 .font(.caption).bold()
-                .foregroundStyle(countdownColor)
-                .padding(.horizontal, 8).padding(.vertical, 4)
-                .background(countdownColor.opacity(0.15), in: Capsule())
+                .foregroundStyle(color)
+                .padding(.horizontal, 9).padding(.vertical, 4)
+                .background(color.opacity(0.15), in: Capsule())
+                .accessibilityIdentifier("deadline.countdown")
         }
+        .accessibilityIdentifier("deadline.row")
+    }
+
+    private var subtitle: String {
+        let module = deadline.module ?? ""
+        guard let due = deadline.dueDate else { return module }
+        let date = due.formatted(date: .abbreviated, time: .omitted)
+        return module.isEmpty ? date : "\(module) · \(date)"
     }
 }

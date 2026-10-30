@@ -19,6 +19,8 @@ struct OnboardingView: View {
                     subtitle: "See your study hours, attendance, and deadlines all in one place.")
     ]
 
+    private var tint: Color { pages[page].tint }
+
     var body: some View {
         VStack(spacing: 0) {
             TabView(selection: $page) {
@@ -40,29 +42,45 @@ struct OnboardingView: View {
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(.indigo, in: RoundedRectangle(cornerRadius: 16))
+                    .background(
+                        LinearGradient(colors: [tint, tint.opacity(0.75)],
+                                       startPoint: .topLeading, endPoint: .bottomTrailing),
+                        in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                     .foregroundStyle(.white)
+                    .shadow(color: tint.opacity(0.35), radius: 10, y: 5)
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 12)
+            .accessibilityIdentifier("onboarding.next")
 
             Button("Skip") { hasOnboarded = true }
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .padding(.bottom, 20)
                 .opacity(page < pages.count - 1 ? 1 : 0)
+                .disabled(page == pages.count - 1)
+                .accessibilityIdentifier("onboarding.skip")
         }
-        .background(Color(.systemGroupedBackground))
+        .background(
+            LinearGradient(colors: [tint.opacity(0.16), Color(.systemGroupedBackground)],
+                           startPoint: .top, endPoint: .center)
+                .background(Color(.systemGroupedBackground))
+                .ignoresSafeArea()
+                .animation(.easeInOut(duration: 0.4), value: page)
+        )
     }
 
     private func pageView(_ p: OnboardPage) -> some View {
         VStack(spacing: 28) {
             Spacer()
-            Image(systemName: p.icon)
-                .font(.system(size: 70, weight: .semibold))
-                .foregroundStyle(p.tint)
-                .frame(width: 150, height: 150)
-                .background(p.tint.opacity(0.12), in: RoundedRectangle(cornerRadius: 36))
+            ZStack {
+                Circle().fill(p.tint.opacity(0.08)).frame(width: 220, height: 220)
+                Circle().fill(p.tint.opacity(0.14)).frame(width: 170, height: 170)
+                Image(systemName: p.icon)
+                    .font(.system(size: 70, weight: .semibold))
+                    .foregroundStyle(LinearGradient(colors: [p.tint, p.tint.opacity(0.7)],
+                                                    startPoint: .top, endPoint: .bottom))
+            }
             VStack(spacing: 12) {
                 Text(p.title).font(.title.bold()).multilineTextAlignment(.center)
                 Text(p.subtitle)

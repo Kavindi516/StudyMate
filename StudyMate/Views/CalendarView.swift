@@ -42,19 +42,11 @@ struct CalendarView: View {
             Spacer()
         }
         .padding(14)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
+        .softCard()
     }
 
     private func emptyState(_ title: String, _ icon: String, _ desc: String) -> some View {
-        VStack(spacing: 8) {
-            Image(systemName: icon).font(.largeTitle).foregroundStyle(.secondary)
-            Text(title).font(.headline)
-            Text(desc).font(.caption).foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 50)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
+        EmptyStateCard(title: title, systemImage: icon, message: desc)
     }
 
     private func load() async {

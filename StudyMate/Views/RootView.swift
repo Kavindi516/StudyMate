@@ -12,7 +12,7 @@ struct RootView: View {
         Group {
             if !hasOnboarded {
                 OnboardingView()
-            } else if auth.isSignedIn {
+            } else if isSignedIn {
                 if isUnlocked || !biometricLock {
                     MainTabView()
                 } else {
@@ -25,9 +25,15 @@ struct RootView: View {
         .task {
             auth.start()
             WidgetUpdater.refresh(context: PersistenceController.shared.container.viewContext)
-            NotificationService.shared.requestAuthorization()
+            if !AppEnvironment.isUITesting {
+                NotificationService.shared.requestAuthorization()
+            }
         }
         .preferredColorScheme(scheme)
+    }
+
+    private var isSignedIn: Bool {
+        AppEnvironment.isUITesting ? AppEnvironment.uiTestSignedIn : auth.isSignedIn
     }
 
     private var scheme: ColorScheme? {

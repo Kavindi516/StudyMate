@@ -33,6 +33,7 @@ struct LoginView: View {
                             Text("Sign Up").tag(true)
                         }
                         .pickerStyle(.segmented)
+                        .accessibilityIdentifier("login.mode")
                         .onChange(of: isSignUp) { _, _ in vm.errorMessage = nil }
 
                         VStack(spacing: 12) {
@@ -40,6 +41,8 @@ struct LoginView: View {
                                 Image(systemName: "envelope").foregroundStyle(.secondary).frame(width: 20)
                                 TextField("Email", text: $vm.email)
                                     .textInputAutocapitalization(.never).keyboardType(.emailAddress)
+                                    .autocorrectionDisabled()
+                                    .accessibilityIdentifier("login.email")
                             }
                             .padding()
                             .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
@@ -47,6 +50,7 @@ struct LoginView: View {
                             HStack {
                                 Image(systemName: "lock").foregroundStyle(.secondary).frame(width: 20)
                                 SecureField("Password", text: $vm.password)
+                                    .accessibilityIdentifier("login.password")
                             }
                             .padding()
                             .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
@@ -69,6 +73,7 @@ struct LoginView: View {
                         .buttonStyle(.borderedProminent)
                         .controlSize(.large)
                         .disabled(vm.isLoading || vm.email.isEmpty || vm.password.isEmpty)
+                        .accessibilityIdentifier("login.submit")
                     }
                     .padding()
                     .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 20))

@@ -28,10 +28,16 @@ struct StatsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
+                HeroBanner(image: "studyHeader4", height: 150) {
+                    Text("\(completedSessions) of \(totalSessions) sessions done")
+                        .font(.headline)
+                        .accessibilityIdentifier("stats.summary")
+                }
+
                 HStack(spacing: 12) {
-                    tile("\(totalSessions)", "Sessions", "books.vertical", .blue)
-                    tile(String(format: "%.1fh", totalHours), "Hours", "clock", .indigo)
-                    tile("\(completedSessions)", "Done", "checkmark.circle", .green)
+                    StatTile(value: "\(totalSessions)", label: "Sessions", icon: "books.vertical", color: .blue)
+                    StatTile(value: String(format: "%.1fh", totalHours), label: "Hours", icon: "clock", color: .indigo)
+                    StatTile(value: "\(completedSessions)", label: "Done", icon: "checkmark.circle", color: .green)
                 }
 
                 card("Hours by subject") {
@@ -42,7 +48,7 @@ struct StatsView: View {
                         Chart(hoursBySubject) { item in
                             BarMark(x: .value("Hours", item.hours),
                                     y: .value("Subject", item.subject))
-                                .foregroundStyle(.tint)
+                                .foregroundStyle(Theme.brandGradient)
                                 .cornerRadius(6)
                         }
                         .frame(height: CGFloat(hoursBySubject.count * 44 + 20))
@@ -56,7 +62,9 @@ struct StatsView: View {
                     } else {
                         VStack(spacing: 12) {
                             ForEach(attendanceBySubject, id: \.subject) { row in
-                                HStack {
+                                HStack(spacing: 10) {
+                                    Image(systemName: "checkmark.seal.fill")
+                                        .foregroundStyle(.green)
                                     Text(row.subject)
                                     Spacer()
                                     Text("\(row.count) present").foregroundStyle(.secondary)
@@ -74,16 +82,6 @@ struct StatsView: View {
         .navigationTitle("Progress")
     }
 
-    private func tile(_ v: String, _ l: String, _ icon: String, _ c: Color) -> some View {
-        VStack(spacing: 6) {
-            Image(systemName: icon).font(.title3).foregroundStyle(c)
-            Text(v).font(.title3.bold())
-            Text(l).font(.caption).foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity).padding(.vertical, 16)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
-    }
-
     private func card<Content: View>(_ title: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title).font(.headline)
@@ -91,6 +89,6 @@ struct StatsView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
+        .softCard()
     }
 }

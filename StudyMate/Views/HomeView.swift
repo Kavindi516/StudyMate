@@ -18,34 +18,30 @@ struct HomeView: View {
         Double(todaySessions.reduce(0) { $0 + Int($1.durationMinutes) }) / 60.0
     }
     private var greeting: String {
-        switch Calendar.current.component(.hour, from: Date()) {
-        case 0..<12:  return "Good morning"
-        case 12..<17: return "Good afternoon"
-        default:      return "Good evening"
-        }
+        StudyMateLogic.greeting(forHour: Calendar.current.component(.hour, from: Date()))
     }
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Greeting
-                    HStack {
+                    HeroBanner(image: "studyHeader1", height: 190) {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(greeting).font(.largeTitle.bold())
+                            Text(greeting)
+                                .font(.largeTitle.bold())
+                                .accessibilityIdentifier("home.greeting")
                             Text(Date().formatted(.dateTime.weekday(.wide).day().month(.wide)))
-                                .font(.subheadline).foregroundStyle(.secondary)
+                                .font(.subheadline)
                         }
-                        Spacer()
                     }
 
                     SmartSuggestionCard()
 
                     // Stats
                     HStack(spacing: 12) {
-                        statTile("\(todaySessions.count)", "Today", "calendar", .blue)
-                        statTile(String(format: "%.1fh", hoursToday), "Planned", "clock", .indigo)
-                        statTile("\(completedToday)", "Done", "checkmark.circle", .green)
+                        StatTile(value: "\(todaySessions.count)", label: "Today", icon: "calendar", color: .blue)
+                        StatTile(value: String(format: "%.1fh", hoursToday), label: "Planned", icon: "clock", color: .indigo)
+                        StatTile(value: "\(completedToday)", label: "Done", icon: "checkmark.circle", color: .green)
                     }
 
                     // Sessions header
@@ -53,16 +49,25 @@ struct HomeView: View {
                         Text("Today's sessions").font(.title3.bold())
                         Spacer()
                         if !todaySessions.isEmpty {
+                            ProgressView(value: StudyMateLogic.progressFraction(
+                                done: completedToday, total: todaySessions.count))
+                                .tint(.green)
+                                .frame(width: 56)
+                                .accessibilityHidden(true)
                             Text("\(completedToday)/\(todaySessions.count)")
                                 .font(.subheadline).foregroundStyle(.secondary)
+                                .accessibilityIdentifier("home.progress")
                         }
                     }
 
                     if todaySessions.isEmpty {
-                        emptyCard
+                        EmptyStateCard(title: "No sessions today",
+                                       systemImage: "calendar.badge.plus",
+                                       message: "Tap + to plan a study session.",
+                                       banner: "studyHeader3")
                     } else {
                         VStack(spacing: 10) {
-                            ForEach(todaySessions) { sessionCard($0) }
+                            ForEach(todaySessions) { SessionCard(session: $0) }
                         }
                     }
 
@@ -91,75 +96,6 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showingAdd) { AddSessionView() }
         }
-    }
-
-    private func statTile(_ value: String, _ label: String, _ icon: String, _ color: Color) -> some View {
-        VStack(spacing: 6) {
-            Image(systemName: icon).font(.title3).foregroundStyle(color)
-            Text(value).font(.title3.bold())
-            Text(label).font(.caption).foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 16)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
-    }
-
-    private func sessionCard(_ session: StudySession) -> some View {
-        HStack(spacing: 14) {
-            RoundedRectangle(cornerRadius: 4)
-                .fill(priorityColor(session))
-                .frame(width: 6, height: 44)
-            Button {
-                session.isCompleted.toggle(); try? context.save(); WidgetUpdater.refresh(context: context)
-            } label: {
-                Image(systemName: session.isCompleted ? "checkmark.circle.fill" : "circle")
-                    .font(.title2)
-                    .foregroundStyle(session.isCompleted ? .green : .secondary)
-            }
-            .buttonStyle(.plain)
-            VStack(alignment: .leading, spacing: 3) {
-                Text(session.subject ?? "Untitled")
-                    .font(.body.weight(.semibold))
-                    .strikethrough(session.isCompleted)
-                Text("\(session.date ?? Date(), style: .time) · \(session.durationMinutes) min")
-                    .font(.caption).foregroundStyle(.secondary)
-            }
-            Spacer()
-            Text(session.priority ?? "")
-                .font(.caption2.bold())
-                .foregroundStyle(priorityColor(session))
-                .padding(.horizontal, 8).padding(.vertical, 4)
-                .background(priorityColor(session).opacity(0.15), in: Capsule())
-        }
-        .padding(14)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
-        .contextMenu {
-            Button(role: .destructive) { delete(session) } label: {
-                Label("Delete", systemImage: "trash")
-            }
-        }
-    }
-
-    private var emptyCard: some View {
-        VStack(spacing: 8) {
-            Image(systemName: "calendar.badge.plus").font(.largeTitle).foregroundStyle(.secondary)
-            Text("No sessions today").font(.headline)
-            Text("Tap + to plan a study session.").font(.caption).foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 40)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
-    }
-
-    private func priorityColor(_ s: StudySession) -> Color {
-        switch s.priority { case "High": return .red; case "Low": return .green; default: return .orange }
-    }
-
-    private func delete(_ session: StudySession) {
-        if let eventId = session.eventId { CalendarService.shared.removeEvent(identifier: eventId) }
-        context.delete(session)
-        try? context.save()
-        WidgetUpdater.refresh(context: context)
     }
 }
 

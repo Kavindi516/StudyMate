@@ -102,10 +102,6 @@ struct SettingsView: View {
     }
 
     private func resetData() {
-        for name in ["StudySession", "Deadline", "ClassLocation", "AttendanceRecord"] {
-            let req = NSFetchRequest<NSFetchRequestResult>(entityName: name)
-            _ = try? context.execute(NSBatchDeleteRequest(fetchRequest: req))
-        }
-        context.reset()
+        DataResetService.resetAll(in: context)
     }
 }

@@ -7,7 +7,10 @@ struct StudyMateApp: App {
     @StateObject private var auth = AuthService()
     let persistence = PersistenceController.shared
 
-    init() { FirebaseApp.configure() }
+    init() {
+        AppEnvironment.prepareForUITesting()
+        FirebaseApp.configure()
+    }
 
     var body: some Scene {
         WindowGroup {

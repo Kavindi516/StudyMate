@@ -54,16 +54,11 @@ struct GroupsView: View {
             Image(systemName: "chevron.right").font(.caption).foregroundStyle(.tertiary)
         }
         .padding(14)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
+        .softCard()
     }
 
     private var emptyCard: some View {
-        VStack(spacing: 8) {
-            Image(systemName: "person.2").font(.largeTitle).foregroundStyle(.secondary)
-            Text("No groups yet").font(.headline)
-            Text("Create or join a study group.").font(.caption).foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity).padding(.vertical, 50)
-        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
+        EmptyStateCard(title: "No groups yet", systemImage: "person.2",
+                       message: "Create or join a study group.")
     }
 }

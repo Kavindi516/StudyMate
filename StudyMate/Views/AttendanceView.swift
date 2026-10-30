@@ -96,6 +96,7 @@ struct AttendanceView: View {
                     Label("Check in", systemImage: "checkmark.circle.fill").frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent).tint(.green).controlSize(.large)
+                .accessibilityIdentifier("attendance.checkin")
             } else {
                 HStack(spacing: 12) {
                     Image(systemName: "mappin.and.ellipse")
@@ -104,6 +105,7 @@ struct AttendanceView: View {
                         Text(classes.isEmpty ? "No class locations yet"
                              : "\(classes.count) class location\(classes.count == 1 ? "" : "s")")
                             .font(.headline)
+                            .accessibilityIdentifier("attendance.status")
                         Text(classes.isEmpty ? "Tap + to add one"
                              : "Scan a code or tap a tag at class")
                             .font(.caption).foregroundStyle(.secondary)
@@ -114,6 +116,7 @@ struct AttendanceView: View {
                     Label("Check in", systemImage: "qrcode.viewfinder").frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered).controlSize(.large)
+                .accessibilityIdentifier("attendance.checkin")
             }
         }
         .padding()

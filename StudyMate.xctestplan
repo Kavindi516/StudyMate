@@ -24,6 +24,13 @@
         "identifier" : "DFBD7052308F5C0A000A67D7",
         "name" : "StudyMateTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:StudyMate.xcodeproj",
+        "identifier" : "DFE1A0000000000000000008",
+        "name" : "StudyMateUITests"
+      }
     }
   ],
   "version" : 1

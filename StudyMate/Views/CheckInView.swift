@@ -33,6 +33,7 @@ struct CheckInView: View {
                         TextField("Attendance code", text: $manualCode)
                             .textFieldStyle(.roundedBorder)
                         Button("Check in") { handle(manualCode, method: "QR") }
+                            .accessibilityIdentifier("checkin.submit")
                     }
                 }.padding(.horizontal)
 
@@ -46,6 +47,7 @@ struct CheckInView: View {
                 }
                 if let message {
                     Text(message).foregroundStyle(success ? .green : .red).bold()
+                        .accessibilityIdentifier("checkin.message")
                 }
                 Spacer()
             }
